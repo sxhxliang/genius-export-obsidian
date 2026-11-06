@@ -1,0 +1,29 @@
+name: Sync platform packages from Genius storage
+
+on:
+  workflow_dispatch:
+    inputs:
+      desktop_tag:
+        description: Genius desktop release tag, for example v0.4.1
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: obsidian-platform-packages
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Minisign
+        run: sudo apt-get update && sudo apt-get install -y minisign
+      - name: Verify and attach packages
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DESKTOP_TAG: ${{ inputs.desktop_tag }}
+        run: python3 scripts/sync-platform-packages.py
