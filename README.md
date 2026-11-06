@@ -23,3 +23,7 @@ The plugin sends the current editor buffer to the configured Genius CLI through 
 ## License
 
 Genius Export and the Genius CLI are Genius software. See [LICENSE](LICENSE) for the Genius license.
+
+## Sync packages from Genius storage
+
+After a Genius desktop release has published its signed manifest and all five Obsidian ZIPs to S3, run **Sync platform packages from Genius storage** in this repository's Actions tab. Enter the desktop tag (for example, `v0.4.1`). The Obsidian release tag must already exist and match the root `manifest.json`. The workflow verifies the S3 signature and ZIP checksums before attaching missing packages to that release. Existing attachments are preserved.
