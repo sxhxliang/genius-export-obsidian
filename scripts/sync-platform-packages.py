@@ -8,6 +8,7 @@ import re
 import shutil
 import subprocess
 import tempfile
+from urllib.error import HTTPError
 from urllib.request import urlopen
 from zipfile import ZipFile
 
@@ -40,8 +41,15 @@ def main():
     with tempfile.TemporaryDirectory() as directory:
         temp = Path(directory)
         signed = temp / "latest.json"
-        download(f"{base}/latest.json", signed)
-        download(f"{base}/latest.json.minisig", temp / "latest.json.minisig")
+        try:
+            download(f"{base}/latest.json", signed)
+            download(f"{base}/latest.json.minisig", temp / "latest.json.minisig")
+        except HTTPError as error:
+            if error.code not in (403, 404):
+                raise
+            channel = "https://s3.gns.sh/channels/stable"
+            download(f"{channel}/latest.json", signed)
+            download(f"{channel}/latest.json.minisig", temp / "latest.json.minisig")
         subprocess.run(["minisign", "-Vm", signed, "-P", PUBLIC_KEY], check=True)
         metadata = json.loads(signed.read_text())
         if metadata.get("tag") != tag:
@@ -77,4 +85,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except (OSError, ValueError, subprocess.CalledProcessError) as error:
+        raise SystemExit(str(error)) from error
