@@ -1,0 +1,10 @@
+{
+  "id": "genius-export",
+  "name": "Genius Export",
+  "version": "0.3.1",
+  "minAppVersion": "1.8.7",
+  "description": "Export notes to PDF or Word using Genius typesetting templates.",
+  "author": "Genius",
+  "authorUrl": "https://gns.sh/",
+  "isDesktopOnly": true
+}
