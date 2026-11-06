@@ -4,7 +4,7 @@ Export the active Markdown note to PDF or Word with Genius typesetting templates
 
 ## Setup
 
-1. Obtain a Genius CLI for your operating system from the [Genius downloads page](https://gns.sh/#download) or from an existing Genius Export platform bundle.
+1. Obtain a Genius CLI for your operating system. On Apple Silicon, download and extract the [Genius CLI ZIP](https://github.com/sxhxliang/genius-export-obsidian/releases/latest). On other systems, use an existing Genius Export platform bundle with a matching CLI.
 2. Open **Settings → Genius Export** and enter the absolute path to the local `genius-cli` executable. On Windows the executable is named `genius-cli.exe`.
 3. Open a Markdown note, run **Genius Export: Export to PDF or Word**, and choose a format and template. The export is written next to the note. Enable **Overwrite existing file** to replace an earlier export.
 
